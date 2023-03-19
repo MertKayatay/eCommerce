@@ -10,9 +10,10 @@ import java.util.List;
 @Service
 public class ProductManager implements ProductService {
 
-    private ProductRepository productRepository;
+    private final ProductRepository productRepository;
 
     public ProductManager(ProductRepository productRepository) {
+
         this.productRepository = productRepository;
     }
 
@@ -76,9 +77,7 @@ public class ProductManager implements ProductService {
 
     @Override
     public Product getById(int id) {
-        if (productRepository.getById(id)== null){
-            throw new RuntimeException("Cannot Find Product");
-        }
+
         return productRepository.getById(id);
     }
 }
