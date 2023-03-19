@@ -19,7 +19,7 @@ public class ProductManager implements ProductService {
 
     @Override
     public boolean isValid(Product product) {
-        if (product.getPrice() <= 0 || product.getQuantity() <= 0
+        if (product.getPrice() <= 0 || product.getQuantity() < 0
         || (product.getDescription().length() < 10 || product.getDescription().length() > 50)) {
             return false;
         }else {
