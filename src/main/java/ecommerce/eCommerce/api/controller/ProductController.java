@@ -1,47 +1,55 @@
 package ecommerce.eCommerce.api.controller;
 
 import ecommerce.eCommerce.business.abstracts.ProductService;
-import ecommerce.eCommerce.entities.concretes.Product;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import ecommerce.eCommerce.entities.Product;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/product")
+@RequestMapping("/api/products")
 public class ProductController {
-    private ProductService productService;
+    private final ProductService productService;
 
     public ProductController(ProductService productService) {
+
         this.productService = productService;
     }
 
-    @GetMapping("/getAll")
+    @GetMapping
     public List<Product> getAll() {
+
         return productService.getAll();
     }
 
-    @GetMapping("/getById")
-    public Product getById(int id) {
+    @GetMapping("/{id}")
+    public Product getById(@PathVariable int id) {
+
         return productService.getById(id);
     }
 
-    @PostMapping("/add")
-    public void addProduct(Product product) {
-        productService.addProduct(product);
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public void addProduct(@RequestBody Product product) {
+
+        productService.add(product);
     }
 
-    @PostMapping("/delete")
-    public void deleteProduct(int id) {
-        productService.deleteProduct(id);
+    @PutMapping("/{id}")
+    public void updateProduct(@RequestBody  Product product,@PathVariable int id) {
+
+        productService.update(product, id);
     }
 
-    @PostMapping("/update")
-    public void updateProduct(Product product, int id) {
-        productService.updateProduct(product, id);
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteProduct( @PathVariable int id) {
+
+        productService.delete(id);
     }
+
+
 
 
 
